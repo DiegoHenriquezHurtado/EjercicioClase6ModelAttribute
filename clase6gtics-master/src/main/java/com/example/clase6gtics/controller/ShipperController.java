@@ -2,13 +2,10 @@ package com.example.clase6gtics.controller;
 
 import com.example.clase6gtics.entity.Shipper;
 import com.example.clase6gtics.repository.ShipperRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.clase6gtics.repository.SupplierRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -19,9 +16,11 @@ import java.util.Optional;
 public class ShipperController {
 
     final ShipperRepository shipperRepository;
+    final SupplierRepository supplierRepository;
 
-    public ShipperController(ShipperRepository shipperRepository) {
+    public ShipperController(ShipperRepository shipperRepository, SupplierRepository supplierRepository) {
         this.shipperRepository = shipperRepository;
+        this.supplierRepository = supplierRepository;
     }
 
     @GetMapping(value = {"/list", ""})
@@ -34,7 +33,8 @@ public class ShipperController {
     }
 
     @GetMapping("/new")
-    public String nuevoTransportistaFrm() {
+    public String nuevoTransportistaFrm(@ModelAttribute("Shipper") Shipper shipper, Model model) {
+        //model.addAttribute("listaCompanias",supplierRepository.findAll());
         return "shipper/newFrm";
     }
 
